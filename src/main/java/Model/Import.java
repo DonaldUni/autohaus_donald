@@ -51,7 +51,6 @@ public class Import implements ImportStrategie {
 
                 clients_list.addAll(clients);
 
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -59,7 +58,7 @@ public class Import implements ImportStrategie {
         }
 
         for (Client client: clients_list) {
-            System.out.println(client.getFirstName()+" "+ client.getLastName()+" "+client.getAddress()+" ");
+            System.out.println(client.getId()+" "+client.getFirstName()+" "+ client.getLastName()+" "+client.getAddress());
         }
         return clients_list;
     }
@@ -84,11 +83,9 @@ public class Import implements ImportStrategie {
 
         }
 
-
         for (Vehicle vehicle: vehicle_list) {
             System.out.println(vehicle.getVehicleType()+" "+ vehicle.getVehicleDesignation()+" "+vehicle.getManufacturer()+" "+ vehicle.getPower()+" "+vehicle.getSalesPrice());
         }
-
 
         return vehicle_list;
     }

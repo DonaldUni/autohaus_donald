@@ -2,12 +2,25 @@ package Model.Person;
 
 public class Client{
 
+    private static long id = -1;
+
     private String firstName;
 
     private String lastName;
 
     private String address;
 
+    public Client() {
+
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+
+    }
 
     public String getFirstName() {
         return firstName;

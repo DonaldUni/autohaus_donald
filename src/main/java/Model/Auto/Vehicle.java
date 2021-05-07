@@ -2,12 +2,20 @@ package Model.Auto;
 
 public class Vehicle {
 
+    private long id = 0;
     private String vehicleType;
     private String vehicleDesignation;
     private String manufacturer;
     private String power;
     private double salesPrice;
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getVehicleType() {
         return vehicleType;
