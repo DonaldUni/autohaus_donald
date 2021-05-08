@@ -33,7 +33,7 @@ public interface StoreStrategie {
 
     public Boolean openReadableVehicleList();
 
-    public Vehicle readVehicle();
+    public Vehicle readVehicle(int id, String vehicleType, String vehicleDesignation, String manufacturer, String power, double salesPrices);
 
     public ArrayList<Vehicle> readVehicleList();
 

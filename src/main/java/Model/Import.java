@@ -1,5 +1,6 @@
 package Model;
 
+import Model.StoreStrategie.DBH2Strategie;
 import Repository.ImportStrategie;
 import App.FilterExtenxionFile;
 import Model.Auto.Vehicle;
@@ -84,20 +85,51 @@ public class Import implements ImportStrategie {
         }
 
         for (Vehicle vehicle: vehicle_list) {
-            System.out.println(vehicle.getVehicleType()+" "+ vehicle.getVehicleDesignation()+" "+vehicle.getManufacturer()+" "+ vehicle.getPower()+" "+vehicle.getSalesPrice());
+            System.out.println(vehicle.getVehicleType()+" "+ vehicle.getVehicleDesignation()+" "+vehicle.getManufacturer()+
+                    " "+ vehicle.getPower()+" "+vehicle.getSalesPrice());
         }
 
         return vehicle_list;
     }
 
     @Override
-    public Boolean storeVehiclesInDatenbank(ArrayList arrayList) {
-        return null;
+    public Boolean storeVehiclesInDatenbank(ArrayList<Vehicle> vehicles) {
+
+        DBH2Strategie storeInDB = new DBH2Strategie();
+
+        storeInDB.writeVehicleList(vehicles);
+
+        return true;
     }
 
     @Override
-    public Boolean storeClientsInDatenbank(ArrayList arrayList) {
-        return null;
+    public Boolean storeClientsInDatenbank(ArrayList<Client> clients) {
+
+        DBH2Strategie storeInDB = new DBH2Strategie();
+
+        storeInDB.writeClientList(clients);
+
+        return true;
+    }
+
+    @Override
+    public ArrayList<Vehicle> importFromDBVehicleList() {
+
+        DBH2Strategie readFromDB = new DBH2Strategie();
+
+        ArrayList<Vehicle> vehicles =  readFromDB.readVehicleList();
+
+        return vehicles;
+    }
+
+    @Override
+    public ArrayList<Client> importFromDBClientList() {
+
+        DBH2Strategie readFromDB = new DBH2Strategie();
+
+        ArrayList<Client> clients =  readFromDB.readClientList();
+
+        return clients;
     }
 
     public ArrayList<Vehicle> getVehicle_list() {
