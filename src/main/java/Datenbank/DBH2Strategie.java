@@ -1,13 +1,32 @@
-package Model.StoreStrategie;
+package Datenbank;
 
-import Model.Auto.Vehicle;
-import Model.Person.Client;
-import Repository.StoreStrategie;
+import model.Auto.Vehicle;
+import model.Auto.VehicleType;
+import model.Person.Client;
 
 import java.sql.*;
 import java.util.ArrayList;
 
 public class DBH2Strategie implements StoreStrategie {
+
+    private final String DATABASEPATH = "jdbc:h2:file:D:/Datenbank";
+
+
+    private final String CLIENTLIST = "ClientList";
+    private final String IDCLIENT = "id";
+    private final String FIRSTNAME = "firstName";
+    private final String LASTNAME = "lastName";
+    private final String ADDRESS = "address";
+
+    private final String VEHICLELIST = "VehicleList";
+    private final String IDVEHICLE = "id";
+    private final String VEHICLETYPE = "vehicleType";
+    private final String VEHICLEDESIGNATION = "vehicleDesignation";
+    private final String MANUFACTURER = "manufacturer";
+    private final String POWER = "power";
+    private final String SALESPRICE = "salesPrice";
+
+
 
     private Connection connection;
 
@@ -16,7 +35,7 @@ public class DBH2Strategie implements StoreStrategie {
         try {
             Class.forName("org.h2.Driver");
 
-            connection = DriverManager.getConnection("jdbc:h2:file:D:/Datenbank");
+            connection = DriverManager.getConnection(DATABASEPATH);   //jdbc:h2:file:D:/Datenbank
             //jdbc:h2:Datenbank.db
             createClientList(connection);
             createVehicleList(connection);
@@ -27,8 +46,8 @@ public class DBH2Strategie implements StoreStrategie {
     }
 
     public void createClientList(Connection con){
-        try (PreparedStatement pstmt = con.prepareStatement("CREATE TABLE IF NOT EXISTS ClientList "
-                +"(id INTEGER, firstName TEXT, lastName TEXT, address TEXT);")){
+        try (PreparedStatement pstmt = con.prepareStatement("CREATE TABLE IF NOT EXISTS "+ CLIENTLIST +
+                " ("+IDCLIENT+" INTEGER, "+ FIRSTNAME +" TEXT, "+ LASTNAME +" TEXT, "+ ADDRESS +" TEXT);")){
 
             pstmt.executeUpdate();
             System.out.println("ClientList Table successfull created");
@@ -39,8 +58,9 @@ public class DBH2Strategie implements StoreStrategie {
 
     public void createVehicleList(Connection con){
         try (PreparedStatement pstmt = con.prepareStatement
-                ("CREATE TABLE IF NOT EXISTS VehicleList "
-                    +"(id INTEGER, vehicleType TEXT, vehicleDesignation TEXT, manufacturer TEXT, power TEXT, salesPrice DOUBLE);")){
+                ("CREATE TABLE IF NOT EXISTS "+ VEHICLELIST +
+                    " ("+ IDVEHICLE +" INTEGER, "+ VEHICLETYPE +" TEXT, " + VEHICLEDESIGNATION +" TEXT, "+
+                        MANUFACTURER +" TEXT, "+ POWER +" TEXT, "+ SALESPRICE +" DOUBLE);")){
 
             pstmt.executeUpdate();
             System.out.println("VehicleList Table successfull created");
@@ -51,14 +71,14 @@ public class DBH2Strategie implements StoreStrategie {
     }
 
     public boolean existClient(Client client){
-        try (PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM  ClientList ;")) {
+        try (PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM  "+ CLIENTLIST +" ;")) {
 
             ResultSet set = pstmt.executeQuery();
             while (set.next()) {
-                if (set.getLong("id") == client.getId()
-                        &&  set.getString("firstName").equals(client.getFirstName())
-                        &&  set.getString("lastName").equals(client.getFirstName())
-                        &&  set.getString("address").equals(client.getFirstName()))
+                if (set.getLong(IDCLIENT) == client.getId()
+                        &&  set.getString(FIRSTNAME).equals(client.getFirstName())
+                        &&  set.getString(LASTNAME).equals(client.getLastName())
+                        &&  set.getString(ADDRESS).equals(client.getAddress()))
                 return true;
             }
         } catch (SQLException e) {
@@ -70,15 +90,15 @@ public class DBH2Strategie implements StoreStrategie {
     public boolean existVehicle(Vehicle vehicle){
 
         try (PreparedStatement pstmt = connection.prepareStatement(
-                "SELECT * FROM  VehicleList ;")) {
+                "SELECT * FROM  "+ VEHICLELIST +" ;")) {
 
             ResultSet set = pstmt.executeQuery();
             while (set.next()) {
-                if (set.getLong("id") == vehicle.getId()
-                        &&  set.getString("vehicleType").equals(vehicle.getVehicleType())
-                        &&  set.getString("vehicleDesignation").equals(vehicle.getVehicleDesignation())
-                        &&  set.getString("manufacturer").equals(vehicle.getManufacturer())
-                        &&  set.getDouble("salesPrice") == vehicle.getSalesPrice()){
+                if (set.getString(VEHICLETYPE).equals(vehicle.getVehicleType().name())
+                        &&  set.getString(VEHICLEDESIGNATION).equals(vehicle.getVehicleDesignation())
+                        &&  set.getString(MANUFACTURER).equals(vehicle.getManufacturer())
+                        &&  set.getDouble(SALESPRICE) == vehicle.getSalesPrice()){
+                    System.out.println("Das Element "+ set.getString(VEHICLEDESIGNATION) +"existiert schon!");
                     return true;
                 }
             }
@@ -96,7 +116,7 @@ public class DBH2Strategie implements StoreStrategie {
                 connection.close();
             }
             if (connection.isClosed()){
-                connection = DriverManager.getConnection("jdbc:h2:file:D:/Datenbank");
+                connection = DriverManager.getConnection(DATABASEPATH);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -108,7 +128,8 @@ public class DBH2Strategie implements StoreStrategie {
     public Boolean writeClient(Client client) {
 
         if (!existClient(client)){
-            try (PreparedStatement pstmt = connection.prepareStatement("INSERT INTO ClientList (id, firstName, lastName, address) VALUES(?,?,?,?) ;")){
+            try (PreparedStatement pstmt = connection.prepareStatement("INSERT INTO "+ CLIENTLIST +
+                    " ("+ IDCLIENT + ", "+ FIRSTNAME +", "+ LASTNAME +", "+ ADDRESS +") VALUES(?,?,?,?) ;")){
                 pstmt.setLong(1, client.getId());
                 pstmt.setString(2, client.getFirstName());
                 pstmt.setString(3, client.getLastName());
@@ -156,7 +177,7 @@ public class DBH2Strategie implements StoreStrategie {
             }
 
             if (connection.isClosed()){
-                connection = DriverManager.getConnection("jdbc:h2:file:D:/Datenbank");
+                connection = DriverManager.getConnection(DATABASEPATH);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -182,13 +203,13 @@ public class DBH2Strategie implements StoreStrategie {
         ArrayList<Client> clients = new ArrayList<>();
         openReadableClientList();
 
-        try (PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM ClientList ;")){
+        try (PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM "+ CLIENTLIST +" ;")){
             ResultSet set = pstmt.executeQuery();
 
             while (set.next()){
 
-                clients.add(readClient(set.getInt("id"),set.getString("firstName"),
-                        set.getString("lastName"), set.getString("address")));
+                clients.add(readClient(set.getInt(IDCLIENT),set.getString(FIRSTNAME),
+                        set.getString(LASTNAME), set.getString(ADDRESS)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -214,8 +235,11 @@ public class DBH2Strategie implements StoreStrategie {
     @Override
     public Boolean openWritableVehicleList() {
         try {
+            if (!connection.isClosed()){
+                connection.close();
+            }
             if (connection.isClosed()){
-                connection = DriverManager.getConnection("jdbc:h2:file:D:/Datenbank");
+                connection = DriverManager.getConnection(DATABASEPATH);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -227,14 +251,17 @@ public class DBH2Strategie implements StoreStrategie {
     public Boolean writeVehicle(Vehicle vehicle) {
 
         if (!existVehicle(vehicle)){
-            try (PreparedStatement pstmt = connection.prepareStatement("INSERT INTO VehicleList "
-                    +"(id, vehicleType, vehicleDesignation, manufacturer, power, salesPrice) VALUES(?,?,?,?,?,?);")){
+            try (PreparedStatement pstmt = connection.prepareStatement("INSERT INTO "+ VEHICLELIST +
+                    " ("+ IDVEHICLE +", "+ VEHICLETYPE +", "+ VEHICLEDESIGNATION +", "+ MANUFACTURER +", "+ POWER +
+                    ", "+ SALESPRICE +") VALUES(?,?,?,?,?,?);")){
+
                 pstmt.setLong(1, vehicle.getId());
-                pstmt.setString(2, vehicle.getVehicleType());
+                pstmt.setString(2, vehicle.getVehicleType().name());
                 pstmt.setString(3, vehicle.getVehicleDesignation());
                 pstmt.setString(4, vehicle.getManufacturer());
-                pstmt.setString(4, vehicle.getPower());
-                pstmt.setDouble(4, vehicle.getSalesPrice());
+                pstmt.setString(5, vehicle.getPower());
+                pstmt.setDouble(6, vehicle.getSalesPrice());
+                pstmt.executeUpdate();
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -256,7 +283,7 @@ public class DBH2Strategie implements StoreStrategie {
 
         closeWritableVehicleList();
 
-        System.out.println("Data sind successfull saved in Database ");
+        System.out.println("Data sind successfull saved in Database. ");
     }
 
     @Override
@@ -272,8 +299,11 @@ public class DBH2Strategie implements StoreStrategie {
     @Override
     public Boolean openReadableVehicleList() {
         try {
+            if (!connection.isClosed()){
+                connection.close();
+            }
             if (connection.isClosed()){
-                connection = DriverManager.getConnection("jdbc:h2:file:D:/Datenbank");
+                connection = DriverManager.getConnection(DATABASEPATH);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -282,7 +312,7 @@ public class DBH2Strategie implements StoreStrategie {
     }
 
     @Override
-    public Vehicle readVehicle(int id, String vehicleType, String vehicleDesignation, String manufacturer, String power, double salesPrices) {
+    public Vehicle readVehicle(int id, VehicleType vehicleType, String vehicleDesignation, String manufacturer, String power, double salesPrices) {
 
         Vehicle vehicle = new Vehicle();
 
@@ -301,14 +331,14 @@ public class DBH2Strategie implements StoreStrategie {
         ArrayList<Vehicle> vehicles = new ArrayList<>();
         openReadableVehicleList();
 
-        try (PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM VehicleList;")){
+        try (PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM "+ VEHICLELIST +" ;")){
 
             ResultSet set = pstmt.executeQuery();
             while (set.next()){
 
-                Vehicle vehicle = readVehicle(set.getInt("id"), set.getString("vehicleType"),
-                        set.getString("vehicleDesignation"), set.getString("manufacturer"), set.getString("power"),
-                        set.getDouble("salesPrices"));
+                Vehicle vehicle = readVehicle(set.getInt(IDVEHICLE), convertInVehicletype(set.getString(VEHICLETYPE)),
+                       set.getString(VEHICLEDESIGNATION), set.getString(MANUFACTURER), set.getString(POWER),
+                        set.getDouble(SALESPRICE));
 
                 vehicles.add(vehicle);
             }
@@ -330,5 +360,45 @@ public class DBH2Strategie implements StoreStrategie {
             e.printStackTrace();
         }
         return true;
+    }
+
+    public void deleteClientList(Connection connection) {
+        try (PreparedStatement pstmt = connection.prepareStatement(
+                "DROP TABLE "+ CLIENTLIST +" ;")) {
+            pstmt.executeUpdate();
+            connection.close();
+
+            System.out.println("Database ClientList deleted");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteVehicleList(Connection connection) {
+        try (PreparedStatement pstmt = connection.prepareStatement(
+                "DROP TABLE "+ VEHICLELIST +" ;")) {
+            pstmt.executeUpdate();
+            connection.close();
+
+            System.out.println("Database VehicleList deleted");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private VehicleType convertInVehicletype(String name){
+        VehicleType vehicleType = VehicleType.LKW;
+
+        if (name.equals("PKW")){
+            vehicleType = VehicleType.PKW;
+        }
+        if (name.equals("Motorrad")){
+            vehicleType = VehicleType.Motorrad;
+        }
+        return vehicleType;
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 }

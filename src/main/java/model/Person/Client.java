@@ -1,8 +1,8 @@
-package Model.Person;
+package model.Person;
 
 public class Client{
 
-    private static long id = -1;
+    private  long id ;
 
     private String firstName;
 
@@ -14,12 +14,13 @@ public class Client{
 
     }
 
+
     public long getId() {
         return id;
     }
 
     public void setId(long id) {
-
+        this.id = id;
     }
 
     public String getFirstName() {

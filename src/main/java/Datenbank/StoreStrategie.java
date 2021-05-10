@@ -1,7 +1,8 @@
-package Repository;
+package Datenbank;
 
-import Model.Auto.Vehicle;
-import Model.Person.Client;
+import model.Auto.Vehicle;
+import model.Auto.VehicleType;
+import model.Person.Client;
 
 import java.util.ArrayList;
 
@@ -33,7 +34,7 @@ public interface StoreStrategie {
 
     public Boolean openReadableVehicleList();
 
-    public Vehicle readVehicle(int id, String vehicleType, String vehicleDesignation, String manufacturer, String power, double salesPrices);
+    public Vehicle readVehicle(int id, VehicleType vehicleType, String vehicleDesignation, String manufacturer, String power, double salesPrices);
 
     public ArrayList<Vehicle> readVehicleList();
 

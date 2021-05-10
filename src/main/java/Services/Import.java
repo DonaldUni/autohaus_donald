@@ -1,13 +1,11 @@
-package Model;
+package Services;
 
-import Model.StoreStrategie.DBH2Strategie;
-import Repository.ImportStrategie;
-import App.FilterExtenxionFile;
-import Model.Auto.Vehicle;
-import Model.Person.Client;
-import com.fasterxml.jackson.core.JsonParseException;
+import model.Auto.IDVehicleGenerator;
+import model.Person.IDClientGenerator;
+import Datenbank.DBH2Strategie;
+import model.Auto.Vehicle;
+import model.Person.Client;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
@@ -36,8 +34,6 @@ public class Import implements ImportStrategie {
         return xml_files;
     }
 
-
-
     @Override
     public ArrayList<Client> extractClients(File[] files) {
 
@@ -55,7 +51,10 @@ public class Import implements ImportStrategie {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
 
+        for (Client client: clients_list) {
+            client.setId(IDClientGenerator.getNextID());
         }
 
         for (Client client: clients_list) {
@@ -81,12 +80,15 @@ public class Import implements ImportStrategie {
             }catch (Exception e){
                 e.printStackTrace();
             }
-
         }
 
         for (Vehicle vehicle: vehicle_list) {
-            System.out.println(vehicle.getVehicleType()+" "+ vehicle.getVehicleDesignation()+" "+vehicle.getManufacturer()+
-                    " "+ vehicle.getPower()+" "+vehicle.getSalesPrice());
+            vehicle.setId(IDVehicleGenerator.getNextID());
+        }
+
+        for (Vehicle vehicle: vehicle_list) {
+            System.out.println(vehicle.getId()+ " "+ vehicle.getVehicleType() +" "+ vehicle.getVehicleDesignation()
+                    +" "+vehicle.getManufacturer()+ " "+ vehicle.getPower()+" "+vehicle.getSalesPrice());
         }
 
         return vehicle_list;
@@ -132,19 +134,18 @@ public class Import implements ImportStrategie {
         return clients;
     }
 
-    public ArrayList<Vehicle> getVehicle_list() {
-        return vehicle_list;
+    public void deleteClientListDB(){
+
+        DBH2Strategie db = new DBH2Strategie();
+
+        db.deleteClientList(db.getConnection());
     }
 
-    public void setVehicle_list(ArrayList<Vehicle> vehicle_list) {
-        this.vehicle_list = vehicle_list;
+    public void deleteVehicleListDB(){
+
+        DBH2Strategie db = new DBH2Strategie();
+
+        db.deleteVehicleList(db.getConnection());
     }
 
-    public ArrayList<Client> getClients_list() {
-        return clients_list;
-    }
-
-    public void setClients_list(ArrayList<Client> clients_list) {
-        this.clients_list = clients_list;
-    }
 }

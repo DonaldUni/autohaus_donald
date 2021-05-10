@@ -1,14 +1,12 @@
 package App;
 
-import Model.Import;
-import Model.Person.Client;
+import Services.Import;
+import model.Person.Client;
 
 import java.io.File;
 import java.util.ArrayList;
 
 public class ImportClient {
-
-
 
     public static void main(String[] args) {
 
@@ -18,6 +16,9 @@ public class ImportClient {
         ArrayList<Client> clients = anImport.extractClients(files);
         anImport.storeClientsInDatenbank(clients);
 
+        System.out.println("Die Kunde-Eingaben wurden erfolgreich in Datenbank gespeichert!");
+
+        //anImport.deleteClientListDB();
     }
 
 

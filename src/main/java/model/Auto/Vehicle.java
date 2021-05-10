@@ -1,9 +1,9 @@
-package Model.Auto;
+package model.Auto;
 
 public class Vehicle {
 
-    private long id = 0;
-    private String vehicleType;
+    private long id ;
+    private VehicleType vehicleType;
     private String vehicleDesignation;
     private String manufacturer;
     private String power;
@@ -17,11 +17,11 @@ public class Vehicle {
         this.id = id;
     }
 
-    public String getVehicleType() {
+    public VehicleType getVehicleType() {
         return vehicleType;
     }
 
-    public void setVehicleType(String vehicleType) {
+    public void setVehicleType(VehicleType vehicleType) {
         this.vehicleType = vehicleType;
     }
 

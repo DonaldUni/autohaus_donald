@@ -1,9 +1,7 @@
 package App;
 
-import Model.Auto.Vehicle;
-import Model.Import;
-import Model.Person.Client;
-
+import model.Auto.Vehicle;
+import Services.Import;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -16,5 +14,8 @@ public class ImportVehicle {
         File[] files = anImport.importDirectoryWithSwing();
         ArrayList<Vehicle> vehicles = anImport.extractVehicles(files);
         anImport.storeVehiclesInDatenbank(vehicles);
+
+       // anImport.deleteVehicleListDB();
+        System.out.println("Die Fahrzeuge-Eingaben wurden erfolgreich in Datenbank gespeichert!");
     }
 }
