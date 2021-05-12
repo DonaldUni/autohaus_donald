@@ -21,20 +21,6 @@ public class Import implements ImportStrategie {
 
 
     @Override
-    public File[] importDirectoryWithSwing() {
-
-        JFileChooser directory = new JFileChooser();
-        directory.setMultiSelectionEnabled(true);     // erlaubt mehrfachige Auswahl
-        directory.addChoosableFileFilter(new FilterExtenxionFile());  //erstellt Filter für Erweiterungen
-        directory.showDialog(directory, "Select");
-
-        // Datei holen
-        File[] xml_files = directory.getSelectedFiles();
-
-        return xml_files;
-    }
-
-    @Override
     public ArrayList<Client> extractClients(File[] files) {
 
         ObjectMapper mapper = new XmlMapper();

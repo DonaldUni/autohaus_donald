@@ -1,6 +1,7 @@
 package App;
 
 import Services.Import;
+import UI.View;
 import model.Person.Client;
 
 import java.io.File;
@@ -12,7 +13,7 @@ public class ImportClient {
 
         Import anImport = new Import();
 
-        File[] files = anImport.importDirectoryWithSwing();
+        File[] files = View.importDirectoryWithSwing();
         ArrayList<Client> clients = anImport.extractClients(files);
         anImport.storeClientsInDatenbank(clients);
 

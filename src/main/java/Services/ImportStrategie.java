@@ -8,8 +8,6 @@ import java.util.ArrayList;
 
 public interface ImportStrategie {
 
-    public File[] importDirectoryWithSwing();
-
     public  ArrayList<Client> extractClients(File[] files);
 
     public  ArrayList<Vehicle> extractVehicles(File[] files);
