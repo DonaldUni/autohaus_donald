@@ -47,7 +47,7 @@ public class DBH2Strategie implements StoreStrategie {
 
     public void createClientList(Connection con){
         try (PreparedStatement pstmt = con.prepareStatement("CREATE TABLE IF NOT EXISTS "+ CLIENTLIST +
-                " ("+IDCLIENT+" INTEGER, "+ FIRSTNAME +" TEXT, "+ LASTNAME +" TEXT, "+ ADDRESS +" TEXT);")){
+                " ("+IDCLIENT+" INTEGER AUTO_INCREMENT PRIMARY KEY, "+ FIRSTNAME +" TEXT, "+ LASTNAME +" TEXT, "+ ADDRESS +" TEXT);")){
 
             pstmt.executeUpdate();
             System.out.println("ClientList Table successfull created");
@@ -59,7 +59,7 @@ public class DBH2Strategie implements StoreStrategie {
     public void createVehicleList(Connection con){
         try (PreparedStatement pstmt = con.prepareStatement
                 ("CREATE TABLE IF NOT EXISTS "+ VEHICLELIST +
-                    " ("+ IDVEHICLE +" INTEGER, "+ VEHICLETYPE +" TEXT, " + VEHICLEDESIGNATION +" TEXT, "+
+                    " ("+ IDVEHICLE +" INTEGER AUTO_INCREMENT PRIMARY KEY, "+ VEHICLETYPE +" TEXT, " + VEHICLEDESIGNATION +" TEXT, "+
                         MANUFACTURER +" TEXT, "+ POWER +" TEXT, "+ SALESPRICE +" DOUBLE);")){
 
             pstmt.executeUpdate();
@@ -147,11 +147,11 @@ public class DBH2Strategie implements StoreStrategie {
 
         if (!existClient(client)){
             try (PreparedStatement pstmt = connection.prepareStatement("INSERT INTO "+ CLIENTLIST +
-                    " ("+ IDCLIENT + ", "+ FIRSTNAME +", "+ LASTNAME +", "+ ADDRESS +") VALUES(?,?,?,?) ;")){
-                pstmt.setLong(1, client.getId());
-                pstmt.setString(2, client.getFirstName());
-                pstmt.setString(3, client.getLastName());
-                pstmt.setString(4, client.getAddress());
+                    " ("+ FIRSTNAME +", "+ LASTNAME +", "+ ADDRESS +") VALUES(?,?,?) ;")){
+                //pstmt.setLong(1, client.getId());
+                pstmt.setString(1, client.getFirstName());
+                pstmt.setString(2, client.getLastName());
+                pstmt.setString(3, client.getAddress());
                 pstmt.executeUpdate();
 
             } catch (SQLException e) {
@@ -216,15 +216,15 @@ public class DBH2Strategie implements StoreStrategie {
 
         if (!existVehicle(vehicle)){
             try (PreparedStatement pstmt = connection.prepareStatement("INSERT INTO "+ VEHICLELIST +
-                    " ("+ IDVEHICLE +", "+ VEHICLETYPE +", "+ VEHICLEDESIGNATION +", "+ MANUFACTURER +", "+ POWER +
-                    ", "+ SALESPRICE +") VALUES(?,?,?,?,?,?);")){
+                    " (" + VEHICLETYPE +", "+ VEHICLEDESIGNATION +", "+ MANUFACTURER +", "+ POWER +
+                    ", "+ SALESPRICE +") VALUES(?,?,?,?,?);")){
 
-                pstmt.setLong(1, vehicle.getId());
-                pstmt.setString(2, vehicle.getVehicleType().name());
-                pstmt.setString(3, vehicle.getVehicleDesignation());
-                pstmt.setString(4, vehicle.getManufacturer());
-                pstmt.setString(5, vehicle.getPower());
-                pstmt.setDouble(6, vehicle.getSalesPrice());
+                //pstmt.setLong(1, vehicle.getId());
+                pstmt.setString(1, vehicle.getVehicleType().name());
+                pstmt.setString(2, vehicle.getVehicleDesignation());
+                pstmt.setString(3, vehicle.getManufacturer());
+                pstmt.setString(4, vehicle.getPower());
+                pstmt.setDouble(5, vehicle.getSalesPrice());
                 pstmt.executeUpdate();
 
             } catch (SQLException e) {

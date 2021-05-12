@@ -2,7 +2,7 @@ package model.Auto;
 
 public class Vehicle {
 
-    private long id ;
+    private long id = -1;
     private VehicleType vehicleType;
     private String vehicleDesignation;
     private String manufacturer;

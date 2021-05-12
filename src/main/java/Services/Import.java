@@ -1,7 +1,5 @@
 package Services;
 
-import model.Auto.IDVehicleGenerator;
-import model.Person.IDClientGenerator;
 import Datenbank.DBH2Strategie;
 import model.Auto.Vehicle;
 import model.Person.Client;
@@ -9,20 +7,16 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
-import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Import implements ImportStrategie {
 
-    private ArrayList<Vehicle> vehicle_list = new ArrayList<>();
-    private ArrayList<Client> clients_list = new ArrayList<>();
-
-
     @Override
     public ArrayList<Client> extractClients(File[] files) {
 
+        ArrayList<Client> clients_list = new ArrayList<>();
         ObjectMapper mapper = new XmlMapper();
 
         for (File file: files) {
@@ -40,10 +34,6 @@ public class Import implements ImportStrategie {
         }
 
         for (Client client: clients_list) {
-            client.setId(IDClientGenerator.getNextID());
-        }
-
-        for (Client client: clients_list) {
             System.out.println(client.getId()+" "+client.getFirstName()+" "+ client.getLastName()+" "+client.getAddress());
         }
         return clients_list;
@@ -52,6 +42,7 @@ public class Import implements ImportStrategie {
     @Override
     public ArrayList<Vehicle> extractVehicles(File[] files) {
 
+        ArrayList<Vehicle> vehicle_list = new ArrayList<>();
         ObjectMapper mapper = new XmlMapper();
 
         for (File file: files) {
@@ -66,10 +57,6 @@ public class Import implements ImportStrategie {
             }catch (Exception e){
                 e.printStackTrace();
             }
-        }
-
-        for (Vehicle vehicle: vehicle_list) {
-            vehicle.setId(IDVehicleGenerator.getNextID());
         }
 
         for (Vehicle vehicle: vehicle_list) {

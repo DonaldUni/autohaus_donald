@@ -29,9 +29,9 @@ public class CreateLetter {
         /*System.out.println("Das ist die List von Kunden");
         for (Client client: clients) {
             System.out.println(client.getId()+" "+client.getFirstName()+" "+ client.getLastName()+" "+client.getAddress());
-        }*/
+        }
 
-        /*System.out.println("Das ist die List von Fahrzeuge");
+        System.out.println("Das ist die List von Fahrzeuge");
         for (Vehicle vehicle: vehicles) {
             System.out.println(vehicle.getId() +" "+ vehicle.getVehicleType()+" "+ vehicle.getVehicleDesignation()+
                     " "+vehicle.getManufacturer()+" "+ vehicle.getPower()+" "+vehicle.getSalesPrice());
