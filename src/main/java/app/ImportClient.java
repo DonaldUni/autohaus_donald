@@ -1,6 +1,6 @@
-package App;
+package app;
 
-import Services.Import;
+import services.ClientService;
 import UI.View;
 import model.Person.Client;
 
@@ -11,15 +11,15 @@ public class ImportClient {
 
     public static void main(String[] args) {
 
-        Import anImport = new Import();
+        ClientService service = new ClientService();
 
         File[] files = View.importDirectoryWithSwing();
-        ArrayList<Client> clients = anImport.extractClients(files);
-        anImport.storeClientsInDatenbank(clients);
+        ArrayList<Client> clients = service.extractData(files);
+        service.storeDataInDB(clients);
 
         System.out.println("Die Kunde-Eingaben wurden erfolgreich in Datenbank gespeichert!");
 
-        //anImport.deleteClientListDB();
+        //service.deleteTableFromDB();
     }
 
 

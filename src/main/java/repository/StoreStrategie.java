@@ -1,4 +1,4 @@
-package Datenbank;
+package repository;
 
 import model.Auto.Vehicle;
 import model.Auto.VehicleType;
