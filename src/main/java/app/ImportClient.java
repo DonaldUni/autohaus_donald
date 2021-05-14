@@ -9,17 +9,18 @@ import java.util.ArrayList;
 
 public class ImportClient {
 
+    // Wählt sie XML-Datei aus, extrahieren die Kunden-Daten und speichert es persistiert in der Datenbank
     public static void main(String[] args) {
 
-        ClientService service = new ClientService();
+        ClientService clientService = new ClientService();
 
         File[] files = View.importDirectoryWithSwing();
-        ArrayList<Client> clients = service.extractData(files);
-        service.storeDataInDB(clients);
+        ArrayList<Client> clients = clientService.extractData(files);
+        clientService.storeDataInDB(clients);
 
         System.out.println("Die Kunde-Eingaben wurden erfolgreich in Datenbank gespeichert!");
 
-        //service.deleteTableFromDB();
+        //clientService.deleteTableFromDB();
     }
 
 

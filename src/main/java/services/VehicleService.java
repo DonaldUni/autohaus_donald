@@ -12,8 +12,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VehicleService implements ImportStrategie{
+public class VehicleService implements ImportService {
 
+    // extrahiere die Fahrzeug-Daten aus der eingegebenen XML-Datei und liefert dementsprechend eine List von erstellten Fahrzeuge
     @Override
     public ArrayList<Vehicle> extractData(File[] files) {
         ArrayList<Vehicle> vehicle_list = new ArrayList<>();
@@ -33,34 +34,33 @@ public class VehicleService implements ImportStrategie{
             }
         }
 
-        for (Vehicle vehicle: vehicle_list) {
+        /*for (Vehicle vehicle: vehicle_list) {
             System.out.println(vehicle.getId()+ " "+ vehicle.getVehicleType() +" "+ vehicle.getVehicleDesignation()
                     +" "+vehicle.getManufacturer()+ " "+ vehicle.getPower()+" "+vehicle.getSalesPrice());
-        }
+        }*/
 
         return vehicle_list;
     }
 
+    // Speichert die gegebene List von Fahrzeug in der Datenbank
     @Override
-    public Boolean storeDataInDB(ArrayList vehicles) {
+    public void storeDataInDB(ArrayList vehicles) {
 
         DBH2Strategie storeInDB = new DBH2Strategie();
 
         storeInDB.writeVehicleList(vehicles);
-
-        return true;
     }
 
+    // holt die List von Fahrzeug aus der Datenbank
     @Override
     public ArrayList<Vehicle> importDataFromDB() {
 
         DBH2Strategie readFromDB = new DBH2Strategie();
 
-        ArrayList<Vehicle> vehicles1 =  readFromDB.readVehicleList();
-
-        return vehicles1;
+        return readFromDB.readVehicleList();
     }
 
+    //entfernt die Fahrzeug-Tabelle der Datenbank
     @Override
     public void deleteTableFromDB() {
 

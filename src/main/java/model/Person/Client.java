@@ -14,7 +14,7 @@ public class Client{
 
     }
 
-
+    // getter und setter
     public long getId() {
         return id;
     }

@@ -9,6 +9,7 @@ public class Vehicle {
     private String power;
     private double salesPrice;
 
+    // getter und setter
     public long getId() {
         return id;
     }

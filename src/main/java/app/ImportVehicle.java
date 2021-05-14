@@ -9,16 +9,17 @@ import java.util.ArrayList;
 
 public class ImportVehicle {
 
+    // Wählt sie XML-Datei aus, extrahieren die Fahrzeuge-Daten und speichert es persistiert in der Datenbank
     public static void main(String[] args) {
 
-        VehicleService service = new VehicleService();
+        VehicleService vehicleService = new VehicleService();
 
         File[] files = View.importDirectoryWithSwing();
-        ArrayList<Vehicle> vehicles = service.extractData(files);
-        service.storeDataInDB(vehicles);
+        ArrayList<Vehicle> vehicles = vehicleService.extractData(files);
+        vehicleService.storeDataInDB(vehicles);
 
         System.out.println("Die Fahrzeuge-Eingaben wurden erfolgreich in Datenbank gespeichert!");
 
-        //service.deleteTableFromDB();
+        //vehicleService.deleteTableFromDB();
     }
 }

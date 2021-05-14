@@ -8,24 +8,24 @@ import java.util.ArrayList;
 
 public interface StoreStrategie {
 
-    public Boolean openConnection();
+     void openConnection();
 
-    public void closeConnection();
+     void closeConnection();
 
-    public void writeClientList(ArrayList<Client> clients);
+     void writeClientList(ArrayList<Client> clients);
 
-    public Boolean writeClient(Client client);
+     void writeClient(Client client);
 
-    public ArrayList<Client> readClientList();
+     ArrayList<Client> readClientList();
 
-    public Client readClient(int id, String firstName, String lastName, String address);
+     Client readClient(int id, String firstName, String lastName, String address);
 
-    public void writeVehicleList(ArrayList<Vehicle> vehicles);
+     void writeVehicleList(ArrayList<Vehicle> vehicles);
 
-    public Boolean writeVehicle(Vehicle vehicle);
+     void writeVehicle(Vehicle vehicle);
 
-    public ArrayList<Vehicle> readVehicleList();
+     ArrayList<Vehicle> readVehicleList();
 
-    public Vehicle readVehicle(int id, VehicleType vehicleType, String vehicleDesignation, String manufacturer, String power, double salesPrices);
+     Vehicle readVehicle(int id, VehicleType vehicleType, String vehicleDesignation, String manufacturer, String power, double salesPrices);
 
 }

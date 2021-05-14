@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 public class DBH2Strategie implements StoreStrategie {
 
+    // Hier sind Konstanten die später in Methode verwendet werden
     private final String DATABASEPATH = "jdbc:h2:file:D:/Datenbank";
-
 
     private final String CLIENTLIST = "ClientList";
     private final String IDCLIENT = "id";
@@ -31,12 +31,12 @@ public class DBH2Strategie implements StoreStrategie {
     private Connection connection;
 
     public DBH2Strategie() {
-
+        // öffne die Verbindung mit der Datenbank und generiert die Kunden- nd Fahrzeug-Tabelle
         try {
             Class.forName("org.h2.Driver");
 
             connection = DriverManager.getConnection(DATABASEPATH);   //jdbc:h2:file:D:/Datenbank
-            //jdbc:h2:Datenbank.db
+
             createClientList(connection);
             createVehicleList(connection);
 
@@ -45,6 +45,7 @@ public class DBH2Strategie implements StoreStrategie {
         }
     }
 
+    // erstellt die Kunden-Tabelle in der Datenbank
     public void createClientList(Connection con){
         try (PreparedStatement pstmt = con.prepareStatement("CREATE TABLE IF NOT EXISTS "+ CLIENTLIST +
                 " ("+IDCLIENT+" INTEGER AUTO_INCREMENT PRIMARY KEY, "+ FIRSTNAME +" TEXT, "+ LASTNAME +" TEXT, "+ ADDRESS +" TEXT);")){
@@ -56,6 +57,7 @@ public class DBH2Strategie implements StoreStrategie {
         }
     }
 
+    // erstellt die Fahrzeug-Tabelle in der Datenbank
     public void createVehicleList(Connection con){
         try (PreparedStatement pstmt = con.prepareStatement
                 ("CREATE TABLE IF NOT EXISTS "+ VEHICLELIST +
@@ -70,6 +72,7 @@ public class DBH2Strategie implements StoreStrategie {
 
     }
 
+    // prüft ob der zu schreibende Kunde schon in der Datenbank gespeichert ist und liefert entsprechend ein boolean
     public boolean existClient(Client client){
         try (PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM  "+ CLIENTLIST +" ;")) {
 
@@ -86,6 +89,7 @@ public class DBH2Strategie implements StoreStrategie {
         return false;
     }
 
+    // prüft ob das zu schreibende Fahrzeug schon in der Datenbank gespeichert ist und liefert entsprechend ein boolean
     public boolean existVehicle(Vehicle vehicle){
 
         try (PreparedStatement pstmt = connection.prepareStatement(
@@ -107,9 +111,9 @@ public class DBH2Strategie implements StoreStrategie {
         return false;
     }
 
-
+    // öffne die Verbindung mit der Datenbank falls sie geschlossen ist
     @Override
-    public Boolean openConnection() {
+    public void openConnection() {
         try {
             if (connection.isClosed()){
                 connection = DriverManager.getConnection(DATABASEPATH);
@@ -117,9 +121,9 @@ public class DBH2Strategie implements StoreStrategie {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
     }
 
+    // schliesst die Verbindung mit der Datenbank
     @Override
     public void closeConnection() {
         try {
@@ -129,7 +133,7 @@ public class DBH2Strategie implements StoreStrategie {
         }
     }
 
-
+    // schreibt eine List von Kunden in der Datenbank
     @Override
     public void writeClientList(ArrayList<Client> clients) {
 
@@ -142,8 +146,9 @@ public class DBH2Strategie implements StoreStrategie {
         System.out.println("Data sind successfull saved in Database ");
     }
 
+    // schreibt nur einen Kunde in der Datenbank
     @Override
-    public Boolean writeClient(Client client) {
+    public void writeClient(Client client) {
 
         if (!existClient(client)){
             try (PreparedStatement pstmt = connection.prepareStatement("INSERT INTO "+ CLIENTLIST +
@@ -157,12 +162,10 @@ public class DBH2Strategie implements StoreStrategie {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            return true;                // client is successfull inserted
         }
-
-        return false;                   //client was already in the table
     }
 
+    // Liest die List von Kunden, die in der Datenbank ist.
     @Override
     public ArrayList<Client> readClientList() {
 
@@ -185,6 +188,7 @@ public class DBH2Strategie implements StoreStrategie {
         return clients;
     }
 
+    // generiert einen Kunde mit der Daten aus der Datenbank
     @Override
     public Client readClient(int id, String firstName, String lastName, String address) {
 
@@ -197,6 +201,7 @@ public class DBH2Strategie implements StoreStrategie {
         return client;
     }
 
+    // schreibt eine List von Fahrzeug in der Datenbank
     @Override
     public void writeVehicleList(ArrayList<Vehicle> vehicles) {
 
@@ -211,8 +216,9 @@ public class DBH2Strategie implements StoreStrategie {
         System.out.println("Data sind successfull saved in Database. ");
     }
 
+    // schreibt nur ein Fahrzeug in der Datenbank
     @Override
-    public Boolean writeVehicle(Vehicle vehicle) {
+    public void writeVehicle(Vehicle vehicle) {
 
         if (!existVehicle(vehicle)){
             try (PreparedStatement pstmt = connection.prepareStatement("INSERT INTO "+ VEHICLELIST +
@@ -230,12 +236,10 @@ public class DBH2Strategie implements StoreStrategie {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            return true;                // vehicle is successfull inserted
         }
-
-        return false;                   //vehicle was already in the table
     }
 
+    // Liest die List von Fahrzeug, die in der Datenbank ist.
     @Override
     public ArrayList<Vehicle> readVehicleList() {
 
@@ -261,6 +265,7 @@ public class DBH2Strategie implements StoreStrategie {
         return vehicles;
     }
 
+    // generiert ein Fahrzeugt mit der Daten aus der Datenbank
     @Override
     public Vehicle readVehicle(int id, VehicleType vehicleType, String vehicleDesignation, String manufacturer, String power, double salesPrices) {
 
@@ -275,6 +280,7 @@ public class DBH2Strategie implements StoreStrategie {
         return vehicle;
     }
 
+    // entfernt die Kunden-Tabelle aus der Datenbank
     public void deleteClientList(Connection connection) {
 
         openConnection();
@@ -292,6 +298,7 @@ public class DBH2Strategie implements StoreStrategie {
         closeConnection();
     }
 
+    // entfernt die Fahrzeug-Tabelle aus der Datenbank
     public void deleteVehicleList(Connection connection) {
         openConnection();
 
@@ -308,6 +315,7 @@ public class DBH2Strategie implements StoreStrategie {
         closeConnection();
     }
 
+    //konvertiert text in Fahrzeugtyp
     private VehicleType convertInVehicletype(String name){
         VehicleType vehicleType = VehicleType.LKW;
 
@@ -320,6 +328,7 @@ public class DBH2Strategie implements StoreStrategie {
         return vehicleType;
     }
 
+    //getter
     public Connection getConnection() {
         return connection;
     }

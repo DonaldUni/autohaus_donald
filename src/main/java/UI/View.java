@@ -5,6 +5,7 @@ import java.io.File;
 
 public class View {
 
+    // Anzeigt ein Fenster, um den Auswahlt von XML-Datei zu ermöglischen
     public static File[] importDirectoryWithSwing() {
 
         JFileChooser directory = new JFileChooser();
@@ -12,9 +13,7 @@ public class View {
         directory.addChoosableFileFilter(new FilterExtenxionFile());  //erstellt Filter für Erweiterungen
         directory.showDialog(directory, "Select");
 
-        // Datei holen
-        File[] xml_files = directory.getSelectedFiles();
-
-        return xml_files;
+        // Datei holen und zuruckgeben
+        return directory.getSelectedFiles();
     }
 }

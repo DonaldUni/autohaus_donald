@@ -12,8 +12,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientService implements ImportStrategie{
+public class ClientService implements ImportService {
 
+    // extrahiere die Kunden-Daten aus der eingegebenen XML-Datei und liefert dementsprechend eine List von erstellten Kunde
     @Override
     public ArrayList<Client> extractData(File[] files) {
 
@@ -34,32 +35,31 @@ public class ClientService implements ImportStrategie{
             }
         }
 
-        for (Client client: clients_list) {
+        /*for (Client client: clients_list) {
             System.out.println(client.getId()+" "+client.getFirstName()+" "+ client.getLastName()+" "+client.getAddress());
-        }
+        }*/
         return clients_list;
     }
 
+    // Speichert die gegebene List von Kunden in der Datenbank
     @Override
-    public Boolean storeDataInDB(ArrayList clients) {
+    public void storeDataInDB(ArrayList clients) {
 
         DBH2Strategie storeInDB = new DBH2Strategie();
 
         storeInDB.writeClientList(clients);
-
-        return true;
     }
 
+    // holt die List von Kunden aus der Datenbank
     @Override
     public ArrayList<Client> importDataFromDB() {
 
         DBH2Strategie readFromDB = new DBH2Strategie();
 
-        ArrayList<Client> clients =  readFromDB.readClientList();
-
-        return clients;
+        return readFromDB.readClientList();
     }
 
+    //entfernt die Kunden-Tabelle der Datenbank
     @Override
     public void deleteTableFromDB() {
 

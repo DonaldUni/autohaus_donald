@@ -8,10 +8,7 @@ public class FilterExtenxionFile extends FileFilter {
     @Override
     public boolean accept(File f) {
 
-        if (f.isDirectory() || f.getName().endsWith("xml") || f.getName().endsWith("XML") ){
-            return true;
-        }
-        return false;
+        return f.isDirectory() || f.getName().endsWith("xml") || f.getName().endsWith("XML");
     }
 
     @Override

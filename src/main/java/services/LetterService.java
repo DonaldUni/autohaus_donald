@@ -1,37 +1,35 @@
 package services;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import model.Auto.Vehicle;
 import model.Person.Client;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 public class LetterService {
 
+    // erstellt Anschreiben in Format PDF mit den Daten von Kunden und von Fahrzeuge
     public static void createLetter(ArrayList<Client> clients, ArrayList<Vehicle> vehicles){
 
         for (Client client: clients) {
             try {
                 Document document = new Document();
-                // create and open the document, where the text will be wrote
+                // erstellt und öffnet das Dokument, wo den text geschrieben wird
                 PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("Anschreiben-"+ client.getFirstName()+"-"+ client.getLastName() +".pdf"));
                 document.open();
 
-                // write the text in the document
+                // schreibt den Text in den Dokument
                 document.add(new Paragraph( client.getAddress()));
                 Paragraph salutation = new Paragraph("Sehr geehrte(r) Frau/Herr "+ client.getLastName() +",");
                 salutation.setSpacingBefore(50f);
 
                 Paragraph bodyText = new Paragraph("hiermit bekommen Sie die aktuelle Liste von  Fahrzeugen, die wir zur Verfügung stellen. Die sind :");
 
-                // create and write the table with the list of Vehicle
+                // erstellt ein Tabelle mit der List von Fahrzeuge
                 PdfPTable listOfVehicles = new PdfPTable(5);
                 listOfVehicles.setWidthPercentage(100);
                 listOfVehicles.setSpacingBefore(50f);
@@ -69,7 +67,7 @@ public class LetterService {
                 Paragraph signature = new Paragraph("Autohaus");
 
 
-                // add all Element to the PDF document
+                // addiert alle Elemente zu den PDF-Dokument
                 document.add(salutation);
                 document.add(bodyText);
                 document.add(listOfVehicles);
@@ -78,7 +76,7 @@ public class LetterService {
 
                 document.close();
                 writer.close();
-            } catch (DocumentException | FileNotFoundException e) {
+            } catch (DocumentException | FileNotFoundException  e) {
                 e.printStackTrace();
             }
         }
