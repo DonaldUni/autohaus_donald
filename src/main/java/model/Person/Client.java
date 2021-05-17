@@ -14,6 +14,13 @@ public class Client{
 
     }
 
+    public Client(long id, String firstName, String lastName, String address) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+    }
+
     // getter und setter
     public long getId() {
         return id;

@@ -9,6 +9,18 @@ public class Vehicle {
     private String power;
     private double salesPrice;
 
+    public Vehicle() {
+    }
+
+    public Vehicle(long id, VehicleType vehicleType, String vehicleDesignation, String manufacturer, String power, double salesPrice) {
+        this.id = id;
+        this.vehicleType = vehicleType;
+        this.vehicleDesignation = vehicleDesignation;
+        this.manufacturer = manufacturer;
+        this.power = power;
+        this.salesPrice = salesPrice;
+    }
+
     // getter und setter
     public long getId() {
         return id;

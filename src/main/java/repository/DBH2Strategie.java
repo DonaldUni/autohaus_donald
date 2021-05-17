@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class DBH2Strategie implements StoreStrategie {
 
     // Hier sind Konstanten die später in Methode verwendet werden
-    private final String DATABASEPATH = "jdbc:h2:file:D:/Datenbank";
+    private final String DATABASEPATH = "jdbc:h2:file:C:\\Users\\Donald Samo\\Documents\\Git Projekte\\Autohaus_donald\\Datenbank\\Datenbank-JDBC";
 
     private final String CLIENTLIST = "ClientList";
     private final String IDCLIENT = "id";
@@ -177,7 +177,7 @@ public class DBH2Strategie implements StoreStrategie {
 
             while (set.next()){
 
-                clients.add(readClient(set.getInt(IDCLIENT),set.getString(FIRSTNAME),
+                clients.add(new Client(set.getInt(IDCLIENT),set.getString(FIRSTNAME),
                         set.getString(LASTNAME), set.getString(ADDRESS)));
             }
         } catch (SQLException e) {
@@ -186,19 +186,6 @@ public class DBH2Strategie implements StoreStrategie {
 
         closeConnection();
         return clients;
-    }
-
-    // generiert einen Kunde mit der Daten aus der Datenbank
-    @Override
-    public Client readClient(int id, String firstName, String lastName, String address) {
-
-        Client client = new Client();
-        client.setId(id);
-        client.setFirstName(firstName);
-        client.setLastName(lastName);
-        client.setAddress(address);
-
-        return client;
     }
 
     // schreibt eine List von Fahrzeug in der Datenbank
@@ -251,11 +238,9 @@ public class DBH2Strategie implements StoreStrategie {
             ResultSet set = pstmt.executeQuery();
             while (set.next()){
 
-                Vehicle vehicle = readVehicle(set.getInt(IDVEHICLE), convertInVehicletype(set.getString(VEHICLETYPE)),
+                vehicles.add(new Vehicle(set.getInt(IDVEHICLE), convertInVehicletype(set.getString(VEHICLETYPE)),
                        set.getString(VEHICLEDESIGNATION), set.getString(MANUFACTURER), set.getString(POWER),
-                        set.getDouble(SALESPRICE));
-
-                vehicles.add(vehicle);
+                        set.getDouble(SALESPRICE)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -263,21 +248,6 @@ public class DBH2Strategie implements StoreStrategie {
 
         closeConnection();
         return vehicles;
-    }
-
-    // generiert ein Fahrzeugt mit der Daten aus der Datenbank
-    @Override
-    public Vehicle readVehicle(int id, VehicleType vehicleType, String vehicleDesignation, String manufacturer, String power, double salesPrices) {
-
-        Vehicle vehicle = new Vehicle();
-
-        vehicle.setId(id);
-        vehicle.setVehicleType(vehicleType);
-        vehicle.setVehicleDesignation(vehicleDesignation);
-        vehicle.setManufacturer(manufacturer);
-        vehicle.setPower(power);
-        vehicle.setSalesPrice(salesPrices);
-        return vehicle;
     }
 
     // entfernt die Kunden-Tabelle aus der Datenbank

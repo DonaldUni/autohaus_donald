@@ -18,14 +18,10 @@ public interface StoreStrategie {
 
      ArrayList<Client> readClientList();
 
-     Client readClient(int id, String firstName, String lastName, String address);
-
      void writeVehicleList(ArrayList<Vehicle> vehicles);
 
      void writeVehicle(Vehicle vehicle);
 
      ArrayList<Vehicle> readVehicleList();
-
-     Vehicle readVehicle(int id, VehicleType vehicleType, String vehicleDesignation, String manufacturer, String power, double salesPrices);
 
 }
