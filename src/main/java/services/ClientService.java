@@ -14,6 +14,8 @@ import java.util.List;
 
 public class ClientService implements ImportService {
 
+    private final DBH2Strategie datenbank = new DBH2Strategie();
+
     // extrahiere die Kunden-Daten aus der eingegebenen XML-Datei und liefert dementsprechend eine List von erstellten Kunde
     @Override
     public ArrayList<Client> extractData(File[] files) {
@@ -45,27 +47,20 @@ public class ClientService implements ImportService {
     @Override
     public void storeDataInDB(ArrayList clients) {
 
-        DBH2Strategie storeInDB = new DBH2Strategie();
-
-        storeInDB.writeClientList(clients);
+        datenbank.writeClientList(clients);
     }
 
     // holt die List von Kunden aus der Datenbank
     @Override
     public ArrayList<Client> importDataFromDB() {
 
-        DBH2Strategie readFromDB = new DBH2Strategie();
-
-        return readFromDB.readClientList();
+        return datenbank.readClientList();
     }
 
     //entfernt die Kunden-Tabelle der Datenbank
     @Override
     public void deleteTableFromDB() {
 
-        DBH2Strategie db = new DBH2Strategie();
-
-        db.deleteClientList(db.getConnection());
-
+        datenbank.deleteClientList(datenbank.getConnection());
     }
 }

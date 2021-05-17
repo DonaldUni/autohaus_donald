@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 public class CreateLetter {
 
-
     //  import Kunden- und Fahrzeug-Daten aus der Datenbank und gengeriert durch die Methode createLetter die PDF-Dokumenten
     public static void main(String[] args) {
 

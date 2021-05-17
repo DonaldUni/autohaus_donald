@@ -80,8 +80,11 @@ public class DBH2Strategie implements StoreStrategie {
             while (set.next()) {
                 if (set.getString(FIRSTNAME).equals(client.getFirstName())
                         &&  set.getString(LASTNAME).equals(client.getLastName())
-                        &&  set.getString(ADDRESS).equals(client.getAddress()))
-                return true;
+                        &&  set.getString(ADDRESS).equals(client.getAddress())){
+
+                    System.out.println("Das Element "+ set.getString(LASTNAME) +" existiert schon!");
+                    return true;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -101,7 +104,7 @@ public class DBH2Strategie implements StoreStrategie {
                         &&  set.getString(VEHICLEDESIGNATION).equals(vehicle.getVehicleDesignation())
                         &&  set.getString(MANUFACTURER).equals(vehicle.getManufacturer())
                         &&  set.getDouble(SALESPRICE) == vehicle.getSalesPrice()){
-                    System.out.println("Das Element "+ set.getString(VEHICLEDESIGNATION) +"existiert schon!");
+                    System.out.println("Das Element "+ set.getString(VEHICLEDESIGNATION) +" existiert schon!");
                     return true;
                 }
             }
