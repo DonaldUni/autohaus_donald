@@ -3,6 +3,8 @@ package repository;
 import model.Auto.Vehicle;
 import model.Auto.VehicleType;
 import model.Person.Client;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -26,8 +28,7 @@ public class DBH2Strategie implements StoreStrategie {
     private final String POWER = "power";
     private final String SALESPRICE = "salesPrice";
 
-
-
+    private final Logger logger = LoggerFactory.getLogger(DBH2Strategie.class);
     private Connection connection;
 
     public DBH2Strategie() {
@@ -51,7 +52,8 @@ public class DBH2Strategie implements StoreStrategie {
                 " ("+IDCLIENT+" INTEGER AUTO_INCREMENT PRIMARY KEY, "+ FIRSTNAME +" TEXT, "+ LASTNAME +" TEXT, "+ ADDRESS +" TEXT);")){
 
             pstmt.executeUpdate();
-            System.out.println("ClientList Table successfull created");
+            //System.out.println("ClientList Table successfull created");
+            logger.info("ClientList Table successfull created");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -65,7 +67,8 @@ public class DBH2Strategie implements StoreStrategie {
                         MANUFACTURER +" TEXT, "+ POWER +" TEXT, "+ SALESPRICE +" DOUBLE);")){
 
             pstmt.executeUpdate();
-            System.out.println("VehicleList Table successfull created");
+            //System.out.println("VehicleList Table successfull created");
+            logger.info("VehicleList Table successfull created");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -82,7 +85,8 @@ public class DBH2Strategie implements StoreStrategie {
                         &&  set.getString(LASTNAME).equals(client.getLastName())
                         &&  set.getString(ADDRESS).equals(client.getAddress())){
 
-                    System.out.println("Das Element "+ set.getString(LASTNAME) +" existiert schon!");
+                    //System.out.println("Das Element "+ set.getString(LASTNAME) +" existiert schon!");
+                    logger.info("Das Element "+ set.getString(LASTNAME) +" existiert schon!");
                     return true;
                 }
             }
@@ -104,7 +108,8 @@ public class DBH2Strategie implements StoreStrategie {
                         &&  set.getString(VEHICLEDESIGNATION).equals(vehicle.getVehicleDesignation())
                         &&  set.getString(MANUFACTURER).equals(vehicle.getManufacturer())
                         &&  set.getDouble(SALESPRICE) == vehicle.getSalesPrice()){
-                    System.out.println("Das Element "+ set.getString(VEHICLEDESIGNATION) +" existiert schon!");
+                    //System.out.println("Das Element "+ set.getString(VEHICLEDESIGNATION) +" existiert schon!");
+                    logger.info("Das Element "+ set.getString(VEHICLEDESIGNATION) +" existiert schon!");
                     return true;
                 }
             }
@@ -146,7 +151,8 @@ public class DBH2Strategie implements StoreStrategie {
 
         closeConnection();
 
-        System.out.println("Data sind successfull saved in Database ");
+        //System.out.println("Data sind successfull saved in Database ");
+        logger.info("Data sind successfull saved in Database ");
     }
 
     // schreibt nur einen Kunde in der Datenbank
@@ -203,7 +209,8 @@ public class DBH2Strategie implements StoreStrategie {
 
         closeConnection();
 
-        System.out.println("Data sind successfull saved in Database. ");
+        //System.out.println("Data sind successfull saved in Database.");
+        logger.info("Data sind successfull saved in Database.");
     }
 
     // schreibt nur ein Fahrzeug in der Datenbank
@@ -263,7 +270,8 @@ public class DBH2Strategie implements StoreStrategie {
             pstmt.executeUpdate();
             connection.close();
 
-            System.out.println("Database ClientList deleted");
+            //System.out.println("Database ClientList deleted");
+            logger.info("Database ClientList deleted");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -280,7 +288,8 @@ public class DBH2Strategie implements StoreStrategie {
             pstmt.executeUpdate();
             connection.close();
 
-            System.out.println("Database VehicleList deleted");
+            //System.out.println("Database VehicleList deleted");
+            logger.info("Database VehicleList deleted");
         } catch (SQLException e) {
             e.printStackTrace();
         }
