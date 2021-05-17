@@ -1,0 +1,83 @@
+<Vehicles>
+
+	<Vehicle>
+		<vehicleType>PKW</vehicleType>
+		<manufacturer>Skoda</manufacturer>
+		<vehicleDesignation>1</vehicleDesignation>
+		<power>125 KW</power>
+		<salesPrice>50000</salesPrice>
+	</Vehicle>
+
+	<Vehicle>
+		<vehicleType>LKW</vehicleType>
+		<manufacturer>Mercedes</manufacturer>
+		<vehicleDesignation>2</vehicleDesignation>
+		<power>1000 KW</power>
+		<salesPrice>100000</salesPrice>
+	</Vehicle>
+
+	<Vehicle>
+		<vehicleType>Motorrad</vehicleType>
+		<manufacturer>Sanili</manufacturer>
+		<vehicleDesignation>3</vehicleDesignation>
+		<power>200 KW</power>
+		<salesPrice>80000</salesPrice>
+	</Vehicle>
+
+	<Vehicle>
+		<vehicleType>LKW</vehicleType>
+		<manufacturer>Opel</manufacturer>
+		<vehicleDesignation>4</vehicleDesignation>
+		<power>357 KW</power>
+		<salesPrice>90000</salesPrice>
+	</Vehicle>
+
+	<Vehicle>
+		<vehicleType>PKW</vehicleType>
+		<manufacturer>Toyota</manufacturer>
+		<vehicleDesignation>5</vehicleDesignation>
+		<power>35257 KW</power>
+		<salesPrice>80000</salesPrice>
+	</Vehicle>
+
+	<Vehicle>
+		<vehicleType>Motorrad</vehicleType>
+		<manufacturer>Siemens</manufacturer>
+		<vehicleDesignation>6</vehicleDesignation>
+		<power>3570 KW</power>
+		<salesPrice>100000</salesPrice>
+	</Vehicle>
+
+	<Vehicle>
+		<vehicleType>LKW</vehicleType>
+		<manufacturer>BMW</manufacturer>
+		<vehicleDesignation>7</vehicleDesignation>
+		<power>35798 KW</power>
+		<salesPrice>90000</salesPrice>
+	</Vehicle>
+
+	<Vehicle>
+		<vehicleType>PKW</vehicleType>
+		<manufacturer>Mercedes</manufacturer>
+		<vehicleDesignation>8</vehicleDesignation>
+		<power>3579 KW</power>
+		<salesPrice>0000</salesPrice>
+	</Vehicle>
+
+	<Vehicle>
+		<vehicleType>PKW</vehicleType>
+		<manufacturer>Audi</manufacturer>
+		<vehicleDesignation>9</vehicleDesignation>
+		<power>5000000 KW</power>
+		<salesPrice>70000</salesPrice>
+	</Vehicle>
+
+	<Vehicle>
+		<vehicleType>LKW</vehicleType>
+		<manufacturer>Opel</manufacturer>
+		<vehicleDesignation>4</vehicleDesignation>
+		<power>357 KW</power>
+		<salesPrice>90000</salesPrice>
+	</Vehicle>
+
+</Vehicles>
