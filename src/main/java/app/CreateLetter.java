@@ -22,7 +22,7 @@ public class CreateLetter {
 
         LetterService.createLetter(clients, vehicles);
 
-        System.out.println("Das ist die List von Kunden");
+        /*System.out.println("Das ist die List von Kunden");
         for (Client client: clients) {
             System.out.println(client.getId()+" "+client.getFirstName()+" "+ client.getLastName()+" "+client.getAddress());
         }
@@ -31,7 +31,7 @@ public class CreateLetter {
         for (Vehicle vehicle: vehicles) {
             System.out.println(vehicle.getId() +" "+ vehicle.getVehicleType()+" "+ vehicle.getVehicleDesignation()+
                     " "+vehicle.getManufacturer()+" "+ vehicle.getPower()+" "+vehicle.getSalesPrice());
-        }
+        }*/
     }
 
 }
